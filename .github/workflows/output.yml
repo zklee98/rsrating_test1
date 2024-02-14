@@ -23,9 +23,9 @@ jobs:
               python relative-strength.py true false ${{ secrets.API_KEY }}
           - name: push to log git
             run: |
-              git clone https://skyte:${{ secrets.PAT }}@github.com/skyte/rs-log.git
-              rm ./rs-log/output/* && cp -a ./output/. ./rs-log/output
-              cd rs-log
+              git clone https://github.com/zklee98/rsrating_output.git
+              rm ./rsrating_output/* && cp -a ./output/. ./rsrating_output/output
+              cd rsrating_output
               git config user.name "CI" && git config user.email "ci@github.com"
               git add --all
               git commit -m "CI output update" || echo "nothing to commit"
