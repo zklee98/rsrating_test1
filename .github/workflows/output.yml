@@ -26,7 +26,7 @@ jobs:
           - name: push to log git
             run: |
               git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
-              rm ./rsrating_output/* && cp -a ./output/. ./rsrating_output/output
+              rm ./rsrating_output/output/* && cp -a ./output/. ./rsrating_output/output
               cd rsrating_output
               git config user.name "CI" && git config user.email "ci@github.com"
               git add --all
