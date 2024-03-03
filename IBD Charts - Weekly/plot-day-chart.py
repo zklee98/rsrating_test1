@@ -17,7 +17,7 @@ import time
 import datetime as dt
 
 
-def make_charts(stock_list,days = 260,INTERVAL='1d'):
+def make_charts(stock_list, rs_rating, days = 260,INTERVAL='1d'):
 
     INDEX = '^GSPC' # SP500
     df_ohlc_index = yf.Ticker(INDEX).history(actions = False, period = 'max', interval = INTERVAL, rounding=True )
@@ -252,7 +252,7 @@ def make_charts(stock_list,days = 260,INTERVAL='1d'):
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
-                    ax1.legend([f'RS Rating - {rs}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    ax1.legend([f'RS Rating - {rs_rating}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
 
 
                     #plt.show(fig)
