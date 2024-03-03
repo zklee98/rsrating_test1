@@ -4,7 +4,7 @@ on:
   #push:
     #branches:
   schedule:
-    - cron: cron: "0 4 * * 6"
+    - cron: "0 4 * * 6"
 
   workflow_dispatch:
 
@@ -29,17 +29,4 @@ jobs:
 
 
 //////////////bottom not configured yet. continue here
-          - name: push to log git
-            run: |
-              git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
-              rm ./rsrating_output/output/* && cp -a ./output/. ./rsrating_output/output
-              cd rsrating_output
-              git config user.name "CI" && git config user.email "ci@github.com"
-              git add --all
-              git commit -m "CI output update" || echo "nothing to commit"
-              git push || echo "nothing to push"
-              
-          # - uses: actions/upload-artifact@v2
-          #   with:
-          #     name: rs_stocks.csv
-          #     path: output
+
