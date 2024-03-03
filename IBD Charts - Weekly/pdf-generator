@@ -1,9 +1,0 @@
-import pandas as pd
-from plot-day-chart
-
-csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'output', 'rs_stocks.csv')
-
-# Read the csv as dataframe then remain only ticker and rs rating
-rs_stocks = pd.read_csv('/content/rs_stocks_25Feb.csv')
-tickers = rs_stocks[['Ticker', 'Percentile']]
-
