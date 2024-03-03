@@ -17,7 +17,7 @@ import time
 import datetime as dt
 
 
-def make_charts(stock_list, rs_rating, days = 260,INTERVAL='1d'):
+def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
     INDEX = '^GSPC' # SP500
     df_ohlc_index = yf.Ticker(INDEX).history(actions = False, period = 'max', interval = INTERVAL, rounding=True )
@@ -31,7 +31,7 @@ def make_charts(stock_list, rs_rating, days = 260,INTERVAL='1d'):
 
     with PdfPages(f'charts{dt.date.today()}.pdf') as pdf:
 
-        for STOCK in tqdm(stock_list):
+        for index, STOCK in enumerate(stock_list):
 
             try:
 
@@ -252,7 +252,7 @@ def make_charts(stock_list, rs_rating, days = 260,INTERVAL='1d'):
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
-                    ax1.legend([f'RS Rating - {rs_rating}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    ax1.legend([f'RS Rating - {ticker_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
 
 
                     #plt.show(fig)
@@ -265,3 +265,15 @@ def make_charts(stock_list, rs_rating, days = 260,INTERVAL='1d'):
                 print('Problem with : ', STOCK)
                 print(exception)
                 #plt.close(fig)
+
+
+
+csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'output', 'rs_stocks.csv')
+
+# Read the csv as dataframe then remain only ticker and rs rating
+rs_stocks = pd.read_csv(csv_path)
+tickers_df = rs_stocks[['Ticker', 'Percentile']]
+
+ticker_list = tickers_df['Ticker'].tolist()
+
+make_charts(ticker_list)
