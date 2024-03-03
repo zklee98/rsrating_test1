@@ -251,8 +251,8 @@ def make_charts(stock_list,days = 260,INTERVAL='1d'):
                     ax3.set_title('Your Title Here')
 
                     legend_properties = {'weight':'bold', 'size': 8}
-                    a = 50
-                    ax1.legend([f'RS Rating - {a}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    #rs = 50
+                    ax1.legend([f'RS Rating - {rs}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
 
 
                     #plt.show(fig)
