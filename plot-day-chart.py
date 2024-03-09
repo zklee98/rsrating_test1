@@ -29,7 +29,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
 
 
-    with PdfPages(f'charts{dt.date.today()}.pdf') as pdf:
+    with PdfPages(f'dayCharts{dt.date.today()}.pdf') as pdf:
 
         for index, STOCK in enumerate(stock_list):
 
