@@ -268,7 +268,13 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                 #plt.close(fig)
 
 
+print("Current Working Directory:", os.getcwd())
 
+# List the contents of the current working directory
+print("Contents of Current Working Directory:")
+for item in os.listdir():
+    print(item)
+    
 csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'output', 'rs_stocks.csv')
 
 # Read the csv as dataframe then remain only ticker and rs rating
