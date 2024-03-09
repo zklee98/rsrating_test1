@@ -29,7 +29,13 @@ jobs:
               python -m pip install -r requirements1.txt'
               python plot-day-chart.py 
 
-
-
-//////////////bottom not configured yet. continue here
-
+          - name: Push PDF to log git
+            run: |
+              git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
+              mkdir -p rsrating_output/dayChart_output
+              rm ./rsrating_output/dayChart_output/* && cp -a *.pdf ./rsrating_output/dayChart_output
+              cd rsrating_output
+              git config user.name "CI" && git config user.email "ci@github.com"
+              git add --all
+              git commit -m "CI: Update latest chart PDF" || echo "Nothing to commit"
+              git push || echo "Nothing to push"
