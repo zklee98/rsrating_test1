@@ -17,7 +17,7 @@ jobs:
             uses: actions/checkout@v2 # checkout the repository content to github runner.
 
           - name: Clone rsrating_output repo
-            run: git clone https://github.com/zklee98/rsrating_output.git
+            run: git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
               
           - name: setup python
             uses: actions/setup-python@v2
@@ -31,7 +31,7 @@ jobs:
 
           - name: Push PDF to log git
             run: |
-              git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
+              #git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
               mkdir -p rsrating_output/dayChart_output
               rm ./rsrating_output/dayChart_output/* && cp -a *.pdf ./rsrating_output/dayChart_output
               cd rsrating_output
