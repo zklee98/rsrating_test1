@@ -31,8 +31,6 @@ jobs:
 
           - name: Push PDF to log git
             run: |
-              #git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
-              mkdir -p rsrating_output/dayChart_output
               rm ./rsrating_output/dayChart_output/* && cp -a *.pdf ./rsrating_output/dayChart_output
               cd rsrating_output
               git config user.name "CI" && git config user.email "ci@github.com"
