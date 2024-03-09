@@ -277,3 +277,11 @@ tickers_df = rs_stocks[['Ticker', 'Percentile']]
 ticker_list = tickers_df['Ticker'].tolist()
 
 make_charts(ticker_list)
+
+print('After plotting')
+print("Current Working Directory:", os.getcwd())
+
+# List the contents of the current working directory
+print("Contents of Current Working Directory:")
+for item in os.listdir():
+    print(item)
