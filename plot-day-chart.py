@@ -249,7 +249,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     ax1.set_ylim(ymin = ylimit_ax1[0]-ylimit_ax1[1]*0.1)
 
                     # Input ticker and number of ticker here
-                    ax3.set_title('Your Title Here')
+                    ax3.set_title(f'[{index+1} of {len(rs_stocks)}]')
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
