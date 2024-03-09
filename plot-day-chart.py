@@ -253,7 +253,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
-                    ax1.legend([f'RS Rating - {ticker_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    ax1.legend([f'RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
 
 
                     #plt.show(fig)
