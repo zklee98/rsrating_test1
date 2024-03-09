@@ -268,7 +268,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                 #plt.close(fig)
 
     
-csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'rsrating_output', output', 'rs_stocks.csv')
+csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'rsrating_output', 'output', 'rs_stocks.csv')
 
 # Read the csv as dataframe then remain only ticker and rs rating
 rs_stocks = pd.read_csv(csv_path)
