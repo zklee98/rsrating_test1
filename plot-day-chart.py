@@ -15,6 +15,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from zigzag import *
 import time
 import datetime as dt
+import os
 
 
 def make_charts(stock_list, days = 260,INTERVAL='1d'):
