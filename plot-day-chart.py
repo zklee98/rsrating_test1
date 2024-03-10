@@ -258,7 +258,7 @@ def make_charts(stock_list, bin_number, days = 260,INTERVAL='1d'):
                     #plt.show(fig)
                     pdf.savefig()
                     passed_tickers.append(STOCK)
-                    #plt.close(fig)
+                    plt.close(fig)
 
 
 
@@ -266,7 +266,7 @@ def make_charts(stock_list, bin_number, days = 260,INTERVAL='1d'):
                 print('Problem with : ', STOCK)
                 print(exception)
                 failed_tickers.append(STOCK)
-                #plt.close(fig)
+                plt.close(fig)
 
 
     
