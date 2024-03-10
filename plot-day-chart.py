@@ -63,10 +63,10 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     # add Max and Min extremum for price labels
 
-                    treshold = 0.05 # % of changing price to count as extremum
+                    #treshold = 0.05 # % of changing price to count as extremum
 
-                    df['max']=df.High[peak_valley_pivots(np.array(df.High), treshold, -treshold) == 1]
-                    df['min']=df.Low[peak_valley_pivots(np.array(df.Low), treshold, -treshold) == -1]
+                    #df['max']=df.High[peak_valley_pivots(np.array(df.High), treshold, -treshold) == 1]
+                    #df['min']=df.Low[peak_valley_pivots(np.array(df.Low), treshold, -treshold) == -1]
 
 
                     # last OHLC data for titles
@@ -88,7 +88,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     # styling chart
 
                     #mc = mpf.make_marketcolors(up='#2A3FE5', down='#DB39AD', inherit=True,vcdopcod=True)
-                    mc = mpf.make_marketcolors(up='#2A3FE5', down='#DB39AD', inherit=True)
+                    mc = mpf.make_marketcolors(up='#2736E9', down='#DE32AE', inherit=True)
 
                     base_style = {  'axes.titlesize':       5,
                                     'axes.labelsize':       5,
@@ -103,7 +103,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                                     'axes.linewidth':         0.8,
                                     'savefig.pad_inches': 0.1,
                                     'savefig.bbox': 'tight',
-                                    'grid.alpha':           0.2}
+                                    'grid.alpha':           0.15}
 
                     #ibd = mpf.make_mpf_style(marketcolors=mc, mavcolors=['green', 'red', 'black', 'blue'], y_on_right=True, rc=base_style)
                     ibd = mpf.make_mpf_style(marketcolors=mc, y_on_right=True, rc=base_style)
@@ -205,18 +205,18 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     # add price labels above/below extremum bars
 
-                    price_pad = (max(df_slice.High)-min(df_slice.High))*0.01
+                    #price_pad = (max(df_slice.High)-min(df_slice.High))*0.01
 
-                    for i in range(len(df_slice)):
-                        if not(np.isnan(df_slice['max'].iloc[i])):
-                            ax1.text(i+1, df_slice['max'].iloc[i]+price_pad, np.round(df_slice['max'].iloc[i],2), **kwargs, verticalalignment='bottom')
-                        if not(np.isnan(df_slice['min'].iloc[i])):
-                            ax1.text(i+1, df_slice['min'].iloc[i]-price_pad, np.round(df_slice['min'].iloc[i],2), **kwargs, verticalalignment='top')
+                    #for i in range(len(df_slice)):
+                        #if not(np.isnan(df_slice['max'].iloc[i])):
+                            #ax1.text(i+1, df_slice['max'].iloc[i]+price_pad, np.round(df_slice['max'].iloc[i],2), **kwargs, verticalalignment='bottom')
+                        #if not(np.isnan(df_slice['min'].iloc[i])):
+                            #ax1.text(i+1, df_slice['min'].iloc[i]-price_pad, np.round(df_slice['min'].iloc[i],2), **kwargs, verticalalignment='top')
 
 
 
                     mpf.plot(df_slice, ax=ax1, volume=ax2, addplot=[sp, rs_line, sma200,  sma50, sma150, vol50], datetime_format="%b'%y",tight_layout=True, xrotation=0,
-                        scale_width_adjustment=dict(volume=0.2),ylim=(lim_bottom*0.1,lim_top*1.1), update_width_config=dict(ohlc_ticksize=0.5))
+                        scale_width_adjustment=dict(volume=0.3),ylim=(lim_bottom*0.1,lim_top*1.1), update_width_config=dict(ohlc_ticksize=0.5, ohlc_linewidth=0.85))
 
                     try:
                         high_p = round((c/info['fiftyTwoWeekHigh']-1)*100)
@@ -296,10 +296,10 @@ make_charts(ticker_list)
 
 # Write the list of failed tickers to a text file
 with open('Summary.txt', 'w') as file:
-    file.write(f"\n\nNumber of Failed Tickers: {len(failed_tickers)} out of {len(rs_stocks)}")
-    file.write("Failed Tickers:\n")
+    file.write(f"Number of Tickers successful plotted: {len(passed_tickers)}")
+    file.write(f"\nNumber of Failed Tickers: {len(failed_tickers)} out of {len(rs_stocks)}")
+    file.write("\n\nFailed Tickers:\n")
     file.write("\n".join(failed_tickers))
-    file.write(f"\nNumber of Tickers successful plotted: {len(passed_tickers)}")
     
 print(f"Total tickers processed: {len(passed_tickers)}")
 print(f"Failed tickers: {len(failed_tickers)}")
