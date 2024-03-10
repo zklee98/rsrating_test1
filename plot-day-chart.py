@@ -301,9 +301,8 @@ with open('Summary.txt', 'w') as file:
     file.write("\n".join(failed_tickers))
     file.write(f"\nNumber of Tickers successful plotted: {len(passed_tickers)}")
     
-    print(f"Total tickers processed: {len(tickers)}")
-    print(f"Successful tickers: {successful_tickers}")
-    print(f"Failed tickers: {len(failed_tickers)}")
+print(f"Total tickers processed: {len(passed_tickers)}")
+print(f"Failed tickers: {len(failed_tickers)}")
 
 
 print('After plotting')
