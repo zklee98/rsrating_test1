@@ -288,7 +288,7 @@ bin_size, remainder = divmod(len(rs_stocks), 4)
 make_charts(ticker_list[:bin_size]) #Frist 25%
 make_charts(ticker_list[bin_size: bin_size+bin_size])  #Second 25%
 make_charts(ticker_list[(bin_size*2): (bin_size*3)])    #Third 25%
-make_charts(ticker_list[(bin_size*3): ((bin_size*4)+remainder)]    #Fourth 25%
+make_charts(ticker_list[(bin_size*3): ((bin_size*4)+remainder)])    #Fourth 25%
 
 
 
