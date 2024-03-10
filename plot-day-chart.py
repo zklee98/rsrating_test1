@@ -298,7 +298,7 @@ with open('Summary.txt', 'w') as file:
     file.write(f"\n\nNumber of Failed Tickers: {len(failed_tickers)} out of {len(rs_stocks)}")
     file.write("Failed Tickers:\n")
     file.write("\n".join(failed_tickers))
-    file.write(f"\nNumber of Tickers successful plotted: {len(passed_tickers}")
+    file.write(f"\nNumber of Tickers successful plotted: {len(passed_tickers)}")
     
     print(f"Total tickers processed: {len(tickers)}")
     print(f"Successful tickers: {successful_tickers}")
