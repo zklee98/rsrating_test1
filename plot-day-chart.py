@@ -17,6 +17,8 @@ import time
 import datetime as dt
 import os
 
+# Set the timezone to UTC
+os.environ['TZ'] = 'UTC'
 
 def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
