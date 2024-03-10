@@ -17,6 +17,7 @@ import time
 import datetime as dt
 import os
 
+from datetime import datetime
 now = datetime.now()
 
 # Get the timezone information
