@@ -1,0 +1,6 @@
+# These are all the packages and its version that run the PDF pipeline successfully. If it fails in the future, might want to add this in requirement1.txt
+
+Successfully installed Cython-0.29.37 appdirs-1.4.4 beautifulsoup4-4.12.3 certifi-2024.2.2 charset-normalizer-3.3.2 contourpy-1.2.0 
+cycler-0.12.1 fonttools-4.49.0 frozendict-2.4.0 html5lib-1.1 idna-3.6 kiwisolver-1.4.5 lxml-5.1.0 matplotlib-3.7.1 mplfinance-0.12.7a17 
+multitasking-0.0.11 numpy-1.25.2 packaging-24.0 pandas-1.5.3 pandas-ta-0.3.14b0 peewee-3.17.1 pillow-10.2.0 pyparsing-3.1.2 python-dateutil-2.8.2 
+pytz-2023.4 requests-2.31.0 six-1.16.0 soupsieve-2.5 tqdm-4.66.2 urllib3-2.2.1 webencodings-0.5.1 yfinance-0.2.35 zigzag-0.3.2
