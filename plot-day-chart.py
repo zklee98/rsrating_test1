@@ -17,7 +17,7 @@ import time
 import datetime as dt
 import os
 
-def make_charts(stock_list, bin_number, days = 260,INTERVAL='1d'):
+def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
     INDEX = '^GSPC' # SP500
     df_ohlc_index = yf.Ticker(INDEX).history(actions = False, period = 'max', interval = INTERVAL, rounding=True )
@@ -29,7 +29,8 @@ def make_charts(stock_list, bin_number, days = 260,INTERVAL='1d'):
 
 
 
-    with PdfPages(f'dayCharts_{dt.date.today()}_{bin_number}of4.pdf') as pdf:
+    #with PdfPages(f'dayCharts_{dt.date.today()}_{bin_number}of4.pdf') as pdf:
+    with PdfPages(f'dayCharts_{dt.date.today()}.pdf') as pdf:
 
         for index, STOCK in enumerate(stock_list):
 
@@ -258,7 +259,7 @@ def make_charts(stock_list, bin_number, days = 260,INTERVAL='1d'):
                     #plt.show(fig)
                     pdf.savefig()
                     passed_tickers.append(STOCK)
-                    plt.close(fig)
+                    plt.close()
 
 
 
@@ -266,7 +267,7 @@ def make_charts(stock_list, bin_number, days = 260,INTERVAL='1d'):
                 print('Problem with : ', STOCK)
                 print(exception)
                 failed_tickers.append(STOCK)
-                plt.close(fig)
+                plt.close()
 
 
     
@@ -282,15 +283,15 @@ passed_tickers = []
 failed_tickers = []
 
 # Split jobs into 4 bin
-bin_size, remainder = divmod(len(rs_stocks), 4)
+#bin_size, remainder = divmod(len(rs_stocks), 4)
 
 # Plot chart for each bin
-make_charts(ticker_list[:bin_size], bin_number =1) #Frist 25%
-make_charts(ticker_list[bin_size: bin_size+bin_size], bin_number=2)  #Second 25%
-make_charts(ticker_list[(bin_size*2): (bin_size*3)], bin_number=3)    #Third 25%
-make_charts(ticker_list[(bin_size*3): ((bin_size*4)+remainder)], bin_number=4)    #Fourth 25%
+#make_charts(ticker_list[:bin_size], bin_number =1) #Frist 25%
+#make_charts(ticker_list[bin_size: bin_size+bin_size], bin_number=2)  #Second 25%
+#make_charts(ticker_list[(bin_size*2): (bin_size*3)], bin_number=3)    #Third 25%
+#make_charts(ticker_list[(bin_size*3): ((bin_size*4)+remainder)], bin_number=4)    #Fourth 25%
 
-
+make_charts(ticker_list)
 
 
 # Write the list of failed tickers to a text file
