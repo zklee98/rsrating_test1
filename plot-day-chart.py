@@ -249,11 +249,11 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     ax1.set_ylim(ymin = ylimit_ax1[0]-ylimit_ax1[1]*0.1)
 
                     # Input ticker and number of ticker here
-                    ax3.set_title(f'[{index+1} of {len(rs_stocks)}]')
+                    ax3.set_title(f'{STOCK} - [{index+1} of {len(rs_stocks)}]')
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
-                    ax1.legend([f'RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    ax1.legend([f'[{tickers_df.iloc[index, 0]}] RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
 
 
                     #plt.show(fig)
