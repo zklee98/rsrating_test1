@@ -6,3 +6,4 @@ pandas==1.5.3
 tqdm==4.66.2
 numpy==1.25.2
 matplotlib==3.7.1
+pytz==2023.4
