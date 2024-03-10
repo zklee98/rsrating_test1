@@ -17,8 +17,12 @@ import time
 import datetime as dt
 import os
 
-# Set the timezone to UTC
-os.environ['TZ'] = 'UTC'
+now = datetime.now()
+
+# Get the timezone information
+tzinfo = now.astimezone().tzinfo
+
+print("Timezone:", tzinfo)
 
 def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
