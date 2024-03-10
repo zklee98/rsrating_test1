@@ -257,6 +257,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     #plt.show(fig)
                     pdf.savefig()
+                    passed_tickers.append(STOCK)
                     #plt.close(fig)
 
 
@@ -264,7 +265,9 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
             except Exception as exception:
                 print('Problem with : ', STOCK)
                 print(exception)
+                failed_tickers.append(STOCK)
                 #plt.close(fig)
+
 
     
 csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'rsrating_output', 'output', 'rs_stocks.csv')
@@ -272,10 +275,35 @@ csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'rsrating_output', 'outpu
 # Read the csv as dataframe then remain only ticker and rs rating
 rs_stocks = pd.read_csv(csv_path)
 tickers_df = rs_stocks[['Ticker', 'Percentile']]
-
 ticker_list = tickers_df['Ticker'].tolist()
 
-make_charts(ticker_list)
+# Creat empty list for passsed & failed tickers
+passed_tickers = []
+failed_tickers = []
+
+# Split jobs into 4 bin
+bin_size, remainder = divmod(len(rs_stocks), 4)
+
+# Plot chart for each bin
+make_charts(ticker_list[:bin_size]) #Frist 25%
+make_charts(ticker_list[bin_size: bin_size+bin_size])  #Second 25%
+make_charts(ticker_list[(bin_size*2): (bin_size*3)])    #Third 25%
+make_charts(ticker_list[(bin_size*3): ((bin_size*4)+remainder)]    #Fourth 25%
+
+
+
+
+# Write the list of failed tickers to a text file
+with open('Summary.txt', 'w') as file:
+    file.write(f"\n\nNumber of Failed Tickers: {len(failed_tickers)} out of {len(rs_stocks)}")
+    file.write("Failed Tickers:\n")
+    file.write("\n".join(failed_tickers))
+    file.write(f"\nNumber of Tickers successful plotted: {len(passed_tickers}")
+    
+    print(f"Total tickers processed: {len(tickers)}")
+    print(f"Successful tickers: {successful_tickers}")
+    print(f"Failed tickers: {len(failed_tickers)}")
+
 
 print('After plotting')
 print("Current Working Directory:", os.getcwd())
