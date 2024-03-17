@@ -24,7 +24,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
     
     #with PdfPages(f'dayCharts_{dt.date.today()}_{bin_number}of4.pdf') as pdf:
-    with PdfPages(f'dayCharts_{dt.date.today()}.pdf') as pdf:
+    with PdfPages(f'Watchlist_{dt.date.today()}.pdf') as pdf:
 
         for index, STOCK in enumerate(stock_list):
             
@@ -307,12 +307,11 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
 
     
-csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'rsrating_output', 'output', 'rs_stocks.csv')
+csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'watchlist', 'watchlist.csv')
 
 # Read the csv as dataframe then remain only ticker and rs rating
-rs_stocks = pd.read_csv(csv_path)
-tickers_df = rs_stocks[['Ticker', 'Percentile']]
-ticker_list = tickers_df['Ticker'].tolist()
+watchlist_df = pd.read_csv(csv_path)
+ticker_list = watchlist_df['Watchlist_Ticker'].tolist()
 
 # Creat empty list for passsed & failed tickers
 passed_tickers = []
