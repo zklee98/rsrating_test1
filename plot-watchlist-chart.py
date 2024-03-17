@@ -285,6 +285,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     ax1.set_ylim(ymin = ylimit_ax1[0]-ylimit_ax1[1]*0.1)
 
                     # Input ticker and number of ticker here
+                    interval_title = 'Day Chart' if str(interval) == '1d' else 'Week Chart'
                     ax3.set_title(f'{STOCK} - [{index+1} of {len(watchlist_df)}]')
 
                     legend_properties = {'weight':'bold', 'size': 8}
