@@ -1,0 +1,4 @@
+aapl
+nvda
+ibit
+lcid
