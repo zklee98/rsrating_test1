@@ -41,7 +41,6 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     df = yf.Ticker(STOCK).history(actions = False, period = 'max', interval = str(interval), rounding=True )
 
 
-
                     df=df.join(df_ohlc_index['Close'], rsuffix='_idx')
 
 
@@ -112,12 +111,15 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     ### !!! temporary replace to chunks loop
                     df_slice = df[-days:]
-
-                    if len(df_slice) < 260:
+                    
+                    if (interval == '1d') and len(df_slice) < 260:
                         num_empty_rows = 260 - len(df_slice) 
-
                         empty_df = pd.DataFrame(index=pd.date_range(start=df_slice.index.min(), periods=num_empty_rows, freq='D'), columns = df_slice.columns)
-
+                        df_slice = pd.concat([empty_df, df_slice])
+                    
+                    elif (interval == '1wk') and len(df_slice) < 54:
+                        num_empty_rows = 54 - len(df_slice)
+                        empty_df = pd.DataFrame(index=pd.date_range(start=df_slice.index.min(), periods=num_empty_rows, freq='D'), columns = df_slice.columns)
                         df_slice = pd.concat([empty_df, df_slice])
 
                     # ======== starting ploting ==================================================
@@ -283,7 +285,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     ax1.set_ylim(ymin = ylimit_ax1[0]-ylimit_ax1[1]*0.1)
 
                     # Input ticker and number of ticker here
-                    ax3.set_title(f'{STOCK} - [{index+1} of {len(rs_stocks)}]')
+                    ax3.set_title(f'{STOCK} - [{index+1} of {len(watchlist_df)}]')
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
@@ -330,6 +332,7 @@ make_charts(ticker_list)
 
 
 # Write the list of failed tickers to a text file
+
 with open('Summary.txt', 'w') as file:
     file.write(f"Number of Tickers successful plotted: {len(passed_tickers)}")
     file.write(f"\nNumber of Failed Tickers: {len(failed_tickers)} out of {len(watchlist_df)}")
