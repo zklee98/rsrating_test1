@@ -1,5 +1,6 @@
 # usage: make_charts(one_ticker as stirng or list of string, number_days(bars)for_showing)
 
+import math
 from tqdm import tqdm
 import pandas_ta as ta
 import yfinance as yf
@@ -19,27 +20,26 @@ import os
 
 def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
-    INDEX = '^GSPC' # SP500
-    df_ohlc_index = yf.Ticker(INDEX).history(actions = False, period = 'max', interval = INTERVAL, rounding=True )
-
-
     if type(stock_list) == type('string'):
         stock_list = [stock_list]
 
-
-
-
+    
     #with PdfPages(f'dayCharts_{dt.date.today()}_{bin_number}of4.pdf') as pdf:
     with PdfPages(f'dayCharts_{dt.date.today()}.pdf') as pdf:
 
         for index, STOCK in enumerate(stock_list):
-
-            try:
+            
+            for interval in ['1d', '1wk']:
+                
+                INDEX = '^GSPC' # SP500
+                df_ohlc_index = yf.Ticker(INDEX).history(actions = False, period = 'max', interval = str(interval), rounding=True )
+                
+                try:
 
                     info = yf.Ticker(STOCK).info
 
 
-                    df = yf.Ticker(STOCK).history(actions = False, period = 'max', interval = INTERVAL, rounding=True )
+                    df = yf.Ticker(STOCK).history(actions = False, period = 'max', interval = str(interval), rounding=True )
 
 
 
@@ -47,12 +47,15 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
 
                     # add TA columns
+                    try:
+                        df.ta.sma(length=50,append=True)
+                        df.ta.sma(length=200,append=True)
+                        df.ta.sma(length=150,append=True)
+                        #df.ta.ema(length=21,append=True)
+                        df['VOL_50'] = df.ta.sma(close=df['Volume'], length=50)
 
-                    df.ta.sma(length=50,append=True)
-                    df.ta.sma(length=200,append=True)
-                    df.ta.sma(length=150,append=True)
-                    #df.ta.ema(length=21,append=True)
-                    df['VOL_50'] = df.ta.sma(close=df['Volume'], length=50)
+                    except Exception as e:
+                        print(f"An error occurred: {e}")
 
                     # add RS-line column
 
@@ -111,6 +114,13 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     ### !!! temporary replace to chunks loop
                     df_slice = df[-days:]
 
+                    if len(df_slice) < 260:
+                        num_empty_rows = 260 - len(df_slice) 
+
+                        empty_df = pd.DataFrame(index=pd.date_range(start=df_slice.index.min(), periods=num_empty_rows, freq='D'), columns = df_slice.columns)
+
+                        df_slice = pd.concat([empty_df, df_slice])
+
                     # ======== starting ploting ==================================================
 
 
@@ -129,10 +139,14 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     #  Set locator intervals
 
+                    try:
+                        lim_bottom =min(df_slice['rs_line'].min(), df_slice['SMA_200'].min())
+                        lim_top =  max(df_slice['rs_line'].max(), df_slice['SMA_200'].max(),df_slice['High'].max())
 
-                    lim_bottom =min(df_slice['rs_line'].min(), df_slice['SMA_200'].min())
-                    lim_top =  max(df_slice['rs_line'].max(), df_slice['SMA_200'].max(),df_slice['High'].max())
-
+                    except Exception as e:
+                        lim_bottom =(df_slice['Low'].min())
+                        lim_top =  (df_slice['High'].max())
+            
 
                     #  Enable minors ticks visible:
 
@@ -181,20 +195,36 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     sp = mpf.make_addplot( (df_slice['Close_idx']  * factor + shift ) , color='black', width=0.9, ax=ax1, alpha = 0.6)
 
 
+                    try:
+                        vol50 = mpf.make_addplot(
+                            df_slice['VOL_50'], panel=2, color='red', width=0.6, ax=ax2)
+                    except Exception as e:
+                        print(f"An error occurred: {e}")
 
-                    vol50 = mpf.make_addplot(
-                        df_slice['VOL_50'], panel=2, color='red', width=0.6, ax=ax2)
-                    rs_line = mpf.make_addplot(
-                        df_slice['rs_line'], ax=ax1, color='blue', width=0.5, alpha=0.75, panel=1)
+                    try:
+                        rs_line = mpf.make_addplot(
+                            df_slice['rs_line'], ax=ax1, color='blue', width=0.5, alpha=0.75, panel=1)
+                    except Exception as e:
+                        print(f"An error occurred: {e}")
 
-                    sma200 = mpf.make_addplot(
-                        df_slice['SMA_200'], ax=ax1,color='black', width=0.5, panel=1)
-                    sma50 = mpf.make_addplot(
-                        df_slice['SMA_50'], ax=ax1,color='red', width=0.5, panel=1)
-                    sma150 = mpf.make_addplot(
-                        df_slice['SMA_150'], ax=ax1,color='orange', width=0.5,  panel=1)
-                    #ema21 = mpf.make_addplot(
-                    #df_slice['EMA_21'], ax=ax1,color='green', width=0.3, panel=1)
+                    try:
+                        sma200 = mpf.make_addplot(
+                            df_slice['SMA_200'], ax=ax1,color='black', width=0.5, panel=1)
+                    except Exception as e:
+                        print(f"An error occurred: {e}")
+
+                    try:
+                        sma50 = mpf.make_addplot(
+                            df_slice['SMA_50'], ax=ax1,color='red', width=0.5, panel=1)
+                    except Exception as e:
+                        print(f"An error occurred: {e}")
+
+                    try:
+                        sma150 = mpf.make_addplot(
+                            df_slice['SMA_150'], ax=ax1,color='orange', width=0.5,  panel=1)
+                    except Exception as e:
+                        print(f"An error occurred: {e}")
+
 
                     # text adding
 
@@ -212,10 +242,16 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                         #if not(np.isnan(df_slice['min'].iloc[i])):
                             #ax1.text(i+1, df_slice['min'].iloc[i]-price_pad, np.round(df_slice['min'].iloc[i],2), **kwargs, verticalalignment='top')
 
+                    
 
+                    try:
+                        mpf.plot(df_slice, ax=ax1, volume=ax2, addplot=[sp, rs_line, sma200,  sma50, sma150, vol50], datetime_format="%b'%y",tight_layout=True, xrotation=0,
+                            scale_width_adjustment=dict(volume=0.3),ylim=(lim_bottom*0.1,lim_top*1.1), update_width_config=dict(ohlc_ticksize=0.5, ohlc_linewidth=0.85))
 
-                    mpf.plot(df_slice, ax=ax1, volume=ax2, addplot=[sp, rs_line, sma200,  sma50, sma150, vol50], datetime_format="%b'%y",tight_layout=True, xrotation=0,
-                        scale_width_adjustment=dict(volume=0.3),ylim=(lim_bottom*0.1,lim_top*1.1), update_width_config=dict(ohlc_ticksize=0.5, ohlc_linewidth=0.85))
+                    except Exception as e:
+                        mpf.plot(df_slice, ax=ax1, volume=ax2, addplot=[sp], datetime_format="%b'%y",tight_layout=True, xrotation=0,
+                            scale_width_adjustment=dict(volume=0.3), ylim=(lim_bottom*0.1, lim_top*1.1), update_width_config=dict(ohlc_ticksize=0.5, ohlc_linewidth=0.85))
+
 
                     try:
                         high_p = round((c/info['fiftyTwoWeekHigh']-1)*100)
@@ -252,7 +288,9 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
-                    ax1.legend([f'[{tickers_df.iloc[index, 0]}] RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    ax1.legend([f'{STOCK.upper()} ({interval_title})       RS Rating - {a}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    #ax1.legend([f'[{tickers_df.iloc[index, 0]}] RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    
 
 
                     #plt.show(fig)
@@ -262,11 +300,11 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
 
 
-            except Exception as exception:
-                print('Problem with : ', STOCK)
-                print(exception)
-                failed_tickers.append(STOCK)
-                plt.close()
+                except Exception as exception:
+                    print('Problem with : ', STOCK)
+                    print(exception)
+                    failed_tickers.append(STOCK)
+                    plt.close()
 
 
     
