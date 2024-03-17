@@ -17,7 +17,7 @@ import time
 import datetime as dt
 import os
 
-def make_charts(stock_list, days = 260,INTERVAL='1d'):
+def make_charts(stock_list, days = 260):
 
     if type(stock_list) == type('string'):
         stock_list = [stock_list]
@@ -286,10 +286,13 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     # Input ticker and number of ticker here
                     interval_title = 'Day Chart' if str(interval) == '1d' else 'Week Chart'
-                    #ax3.set_title(f'{STOCK} - [{index+1} of {len(watchlist_df)}]')
+                    ax3.set_title(f'{STOCK} - [{index+1} of {len(watchlist_df)}]')
 
                     legend_properties = {'weight':'bold', 'size': 8}
-                    rs = stocks_output_df.loc[stocks_output_df['Ticker']==STOCK.upper()].Percentile.values[0]
+                    try:
+                        rs = stocks_output_df.loc[stocks_output_df['Ticker']==STOCK.upper()].Percentile.values[0]
+                    except:
+                        rs = 'N/A'
                     ax1.legend([f'{STOCK.upper()} ({interval_title})       RS Rating - {rs}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
                     #ax1.legend([f'[{tickers_df.iloc[index, 0]}] RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
                     
