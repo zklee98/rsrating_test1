@@ -1,1 +1,46 @@
+name: watchlistDailyGenerator
 
+on:
+  #push:
+    #branches:
+  schedule:
+    - cron: "0 22 * * 0,1,2,3,4,5"
+
+  workflow_dispatch:
+
+jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: checkout repo content
+            uses: actions/checkout@v2 # checkout the repository content to github runner.
+
+          - name: Clone rsrating_output repo
+            run: git clone https://zklee98:${{ secrets.PAT }}@github.com/zklee98/rsrating_output.git
+              
+          - name: setup python
+            uses: actions/setup-python@v2
+            with:
+              python-version: 3.10.12 #install the python needed
+              
+          - name: execute py script
+            run: |
+              python -m pip install -r requirements1.txt
+              python plot-watchlist-chart.py 
+
+          - name: Push PDF to log git
+            run: |
+              rm ./rsrating_output/watchlist_output/* && cp -a *.pdf Summary.txt ./rsrating_output/watchlist_output
+              cd rsrating_output
+              git config user.name "CI" && git config user.email "ci@github.com"
+              git add --all
+
+              # Configure Git LFS for large files
+              git lfs install
+
+              # Track PDF files using Git LFS
+              git lfs track "*.pdf"
+              
+              git commit -m "CI: Update latest chart PDF using Git LFS" || echo "Nothing to commit"
+              git push || echo "Nothing to push"
