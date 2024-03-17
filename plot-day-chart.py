@@ -103,7 +103,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                                     'axes.linewidth':         0.8,
                                     'savefig.pad_inches': 0.1,
                                     'savefig.bbox': 'tight',
-                                    'grid.alpha':           0.15}
+                                    'grid.alpha':           0.2}
 
                     #ibd = mpf.make_mpf_style(marketcolors=mc, mavcolors=['green', 'red', 'black', 'blue'], y_on_right=True, rc=base_style)
                     ibd = mpf.make_mpf_style(marketcolors=mc, y_on_right=True, rc=base_style)
@@ -142,11 +142,10 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     ax1.grid(which='major',color='k')
                     ax1.grid(which='minor',color='gray')
-                    ax2.grid(which='major',color='gray')
-                    ax2.grid(which='minor',axis='x', color='gray', alpha=0.5)
+                    ax2.grid(which='major',color='k')
+                    ax2.grid(which='minor',color='gray')
 
-
-
+                    ax2.grid(which='major',axis='y', alpha=0.04)
 
                     ax2.tick_params(axis='x', which='major', pad = 8)
 
