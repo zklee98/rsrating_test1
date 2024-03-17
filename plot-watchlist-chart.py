@@ -289,9 +289,8 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
                     ax3.set_title(f'{STOCK} - [{index+1} of {len(watchlist_df)}]')
 
                     legend_properties = {'weight':'bold', 'size': 8}
-                    #rs = 50
-                    ax1.legend([f'{STOCK.upper()} ({interval_title})       RS Rating - {stocks_output_df.loc[stocks_output_df['Ticker'] == STOCK.upper()].Percentile.values[0]}'], 
-                               prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    rs = stocks_output_df.loc[stocks_output_df['Ticker']==STOCK.upper()].Percentile.values[0]
+                    ax1.legend([f'{STOCK.upper()} ({interval_title})       RS Rating - {rs}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
                     #ax1.legend([f'[{tickers_df.iloc[index, 0]}] RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
                     
 
