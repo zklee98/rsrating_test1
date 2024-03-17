@@ -3,7 +3,7 @@ name: watchlistDailyGenerator
 on:
   push:
     paths:
-      - 'rsrating_test1/watchlist/watchlist.csv'
+      - 'watchlist/watchlist.csv'
     #branches:
   schedule:
     - cron: "0 22 * * 0,1,2,3,4,5"
