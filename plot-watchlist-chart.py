@@ -1,6 +1,5 @@
 # usage: make_charts(one_ticker as stirng or list of string, number_days(bars)for_showing)
 
-import math
 from tqdm import tqdm
 import pandas_ta as ta
 import yfinance as yf
