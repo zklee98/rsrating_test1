@@ -332,7 +332,7 @@ make_charts(ticker_list)
 # Write the list of failed tickers to a text file
 with open('Summary.txt', 'w') as file:
     file.write(f"Number of Tickers successful plotted: {len(passed_tickers)}")
-    file.write(f"\nNumber of Failed Tickers: {len(failed_tickers)} out of {len(rs_stocks)}")
+    file.write(f"\nNumber of Failed Tickers: {len(failed_tickers)} out of {len(watchlist_df)}")
     file.write("\n\nFailed Tickers:\n")
     file.write("\n".join(failed_tickers))
     
