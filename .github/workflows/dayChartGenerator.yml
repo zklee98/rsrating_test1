@@ -31,7 +31,7 @@ jobs:
 
           - name: Push PDF to log git
             run: |
-              rm ./rsrating_output/dayChart_output/* && cp -a *.{pdf,txt} ./rsrating_output/dayChart_output
+              rm ./rsrating_output/dayChart_output/* && cp -a *.pdf Summary.txt ./rsrating_output/dayChart_output
               cd rsrating_output
               git config user.name "CI" && git config user.email "ci@github.com"
               git add --all
