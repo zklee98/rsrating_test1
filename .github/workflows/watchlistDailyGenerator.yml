@@ -1,7 +1,9 @@
 name: watchlistDailyGenerator
 
 on:
-  #push:
+  push:
+    paths:
+      - 'watchlist/watchlist.csv'
     #branches:
   schedule:
     - cron: "0 22 * * 0,1,2,3,4,5"
