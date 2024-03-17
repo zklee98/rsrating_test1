@@ -290,7 +290,8 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     #rs = 50
-                    ax1.legend([f'{STOCK.upper()} ({interval_title})       RS Rating - {a}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
+                    ax1.legend([f'{STOCK.upper()} ({interval_title})       RS Rating - {stocks_output_df.loc[stocks_output_df['Ticker'] == STOCK.upper()].Percentile.values[0]}'], 
+                               prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
                     #ax1.legend([f'[{tickers_df.iloc[index, 0]}] RS Rating - {tickers_df.iloc[index, 1]}'], prop=legend_properties, labelcolor='blue', handlelength = 0, loc='upper center')
                     
 
@@ -311,8 +312,14 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
     
 csv_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'watchlist', 'watchlist.csv')
+output_path = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'rsrating_output', 'output', 'rs_stocks.csv')
 
-# Read the csv as dataframe then remain only ticker and rs rating
+# Read stocks output csv
+stocks_output_df = pd.read_csv(output_path)
+stocks_output_df = stocks_output_df[['Ticker', 'Percentile']]
+
+
+# Read the watchlist as dataframe then remain only ticker and rs rating
 watchlist_df = pd.read_csv(csv_path)
 ticker_list = watchlist_df['Watchlist_Ticker'].tolist()
 
