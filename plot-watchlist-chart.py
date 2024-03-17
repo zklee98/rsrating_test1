@@ -286,7 +286,7 @@ def make_charts(stock_list, days = 260,INTERVAL='1d'):
 
                     # Input ticker and number of ticker here
                     interval_title = 'Day Chart' if str(interval) == '1d' else 'Week Chart'
-                    ax3.set_title(f'{STOCK} - [{index+1} of {len(watchlist_df)}]')
+                    #ax3.set_title(f'{STOCK} - [{index+1} of {len(watchlist_df)}]')
 
                     legend_properties = {'weight':'bold', 'size': 8}
                     rs = stocks_output_df.loc[stocks_output_df['Ticker']==STOCK.upper()].Percentile.values[0]
