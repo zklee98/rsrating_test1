@@ -1,9 +1,8 @@
 name: dayChartGenerator
 
 on:
-  push:
-    paths:
-      - 'watchlist/watchlist.csv'
+  #push:
+    #branches:
   schedule:
     - cron: "0 23 * * 5,6"
 
