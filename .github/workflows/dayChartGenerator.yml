@@ -35,5 +35,12 @@ jobs:
               cd rsrating_output
               git config user.name "CI" && git config user.email "ci@github.com"
               git add --all
-              git commit -m "CI: Update latest chart PDF" || echo "Nothing to commit"
+
+              # Configure Git LFS for large files
+              git lfs install
+
+              # Track PDF files using Git LFS
+              git lfs track "*.pdf"
+              
+              git commit -m "CI: Update latest chart PDF using Git LFS" || echo "Nothing to commit"
               git push || echo "Nothing to push"
