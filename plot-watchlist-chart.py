@@ -12,7 +12,7 @@ import matplotlib.ticker as mticker
 import matplotlib.dates as mdates
 from matplotlib.backends.backend_pdf import PdfPages
 
-from zigzag import *
+#from zigzag import *
 import time
 import datetime as dt
 import os
