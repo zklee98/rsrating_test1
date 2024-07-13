@@ -26,6 +26,7 @@ jobs:
               
           - name: execute py script
             run: |
+              python -m pip install --upgrade pip==24.0 #Specify desired pip version
               python -m pip install -r requirements1.txt
               python plot-day-chart.py 
 
